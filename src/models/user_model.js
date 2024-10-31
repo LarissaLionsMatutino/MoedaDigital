@@ -1,10 +1,6 @@
 import { Schema, model } from "mongoose";
 
 const usuarioSchema = new Schema({
-    _id: {
-        type: Schema.Types.ObjectId,
-        auto: true // O Mongoose irá gerar automaticamente um ObjectId
-    },
     name: { // Nome do usuário
         type: String,
         required: true
@@ -25,7 +21,6 @@ const usuarioSchema = new Schema({
     walletId: {
         type: Schema.Types.ObjectId,
         ref: 'Wallet', // Referência à coleção de carteiras
-        required: true
     },
     role: { // Permissões do usuário
         type: String,
