@@ -1,8 +1,9 @@
 {
   "name": "moedadigital",
   "version": "1.0.0",
+  "type":"module",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.js",

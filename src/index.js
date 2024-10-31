@@ -3,7 +3,7 @@ import "dotenv/config";
 import "./config/db.js"
 import transaction_route from "./routes/transaction_route.js"
 import user_route from "./routes/user_route.js"
-import wallet_route from "./routes/wallet_route"
+import wallet_route from "./routes/wallet_route.js"
 
 const app = e();
 

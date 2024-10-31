@@ -39,3 +39,5 @@ const transacaoSchema = new Schema({
 
     }
 });
+
+export default model('Transaction', transacaoSchema)

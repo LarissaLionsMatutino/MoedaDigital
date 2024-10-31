@@ -1,4 +1,4 @@
-import Wallet from "../models/wallet-model.js";
+import Wallet from "../models/wallet_model.js";
 
 export const store = async (req, res) => {
   try {
