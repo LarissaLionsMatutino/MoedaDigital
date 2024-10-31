@@ -1,30 +1,41 @@
-import { Schema, SchemaType, model} from "mongoose"
+import { Schema, model } from "mongoose";
 
-const entradaSchema = new Schema ({
-   local :  {
-     type : Schema.Types.String,
-     required : true,
+const transacaoSchema = new Schema({
+    walletFrom: { // Carteira de origem
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Wallet' 
     },
-    horario: {
-        type : Schema.Types.String,
-        required : true
-    }
-})
-
-const saidaSchema = new Schema ({
-    local : {
-        type : Schema.Types.String,
-        required : true
+    walletTo: { // Carteira de destino
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Wallet' 
     },
-    horario : {
-        type : Schema.Types.String,
-        required: true
-    }
-})
+    amount: { // Valor da transação (positivo para depósitos, negativo para saques)
+        type: Number,
+        required: true,
+    },
+    type: { // Tipo de transação (transfer, deposit, withdraw)
+        type: String,
+        enum: ['transfer', 'deposit', 'withdraw'], 
+        required: true,
+    },
+    status: { // Status da transação (completed, pending, failed)
+        type: String,
+        enum: ['completed', 'pending', 'failed'], 
+        required: true,
+    },
+    createdAt: { // Data da transação
+        type: Date,
+        default: Date.now, // Define a data atual como padrão
+    },
+    currency: { // Tipo de moeda envolvida
+        type: String,
+        required: true, 
+    },
+    details: { // Detalhes opcionais sobre a transação
+        type: String,
+        default: '', 
 
-const statusSchema = new Schema ({
-    status : {
-        type : Schema.Types.String,
-        required : true
     }
-})
+});
