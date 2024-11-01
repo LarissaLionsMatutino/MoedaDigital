@@ -1,36 +1,50 @@
 import { Schema, model } from "mongoose";
+import bcrypt from "bcrypt";
 
 const usuarioSchema = new Schema({
-    name: { // Nome do usuário
+    name: {
         type: String,
         required: true
     },
-    email: { // Email para autenticação
+    email: {
         type: String,
         required: true,
         unique: true
     },
-    password: { // Senha criptografada
+    password: {
         type: String,
         required: true 
     },
-    createdAt: { // Data de criação do usuário
+    createdAt: {
         type: Date,
         default: Date.now 
     },
     walletId: {
         type: Schema.Types.ObjectId,
-        ref: 'Wallet', // Referência à coleção de carteiras
+        ref: 'Wallet',
     },
-    role: { // Permissões do usuário
+    role: {
         type: String,
         enum: ['user', 'admin'], 
         default: 'user' 
     },
-    isActive: { // Status da conta do usuário
+    isActive: {
         type: Boolean,
         default: true 
     }
 });
+
+// Criptografa a senha antes de salvar
+usuarioSchema.pre('save', async function (next) {
+    if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
+    next();
+});
+
+// Verifica se a senha está correta
+usuarioSchema.methods.isValidPassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+};
 
 export default model('Usuario', usuarioSchema);
